@@ -3,11 +3,11 @@ demo:
   outputs:
     dev:
       type: snowflake
-      account: bya42734
+      account: BYA42734
 
       # User/password auth
       user: sung
-      password: "{{ env_var('SFPASS') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
 
       role: DEMO_ROLE
       database: DEV
@@ -23,7 +23,7 @@ demo:
 
       # User/password auth
       user: sung
-      password: "{{ env_var('SFPASS') }}"
+      password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
 
       role: DEMO_ROLE
       database: DEV
