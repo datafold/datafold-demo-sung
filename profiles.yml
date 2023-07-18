@@ -1,0 +1,34 @@
+demo:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: bya42734
+
+      # User/password auth
+      user: sung
+      password: "{{ env_var('SFPASS') }}"
+
+      role: DEMO_ROLE
+      database: DEV
+      warehouse: DEMO
+      schema: development_sung
+      threads: 24
+      client_session_keep_alive: True
+      query_tag:
+
+    prod:
+      type: snowflake
+      account: bya42734
+
+      # User/password auth
+      user: sung
+      password: "{{ env_var('SFPASS') }}"
+
+      role: DEMO_ROLE
+      database: DEV
+      warehouse: DEMO
+      schema: production_sung
+      threads: 24
+      client_session_keep_alive: True
+      query_tag:
