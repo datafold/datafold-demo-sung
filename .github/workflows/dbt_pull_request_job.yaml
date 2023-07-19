@@ -9,6 +9,10 @@ on:
 
 jobs:
   run:
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+
     # This is the docker image used for the CI container
     runs-on: ubuntu-20.04
 
