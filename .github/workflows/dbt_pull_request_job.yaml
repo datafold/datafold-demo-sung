@@ -1,0 +1,59 @@
+name: dbt pull request
+
+# Run this job when a commit is pushed to any branch except main
+on:
+  pull_request:
+  push:
+    branches:
+      - '!main'
+
+jobs:
+  run:
+    # This is the docker image used for the CI container
+    runs-on: ubuntu-20.04
+
+    steps:
+        # Pull code from the Github repo into the container
+      - name: checkout
+        uses: actions/checkout@v2
+
+        # Install Python 3.9 (required to run dbt)
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+        # Install Python packages defined in requirements.txt (dbt and dependencies)
+      - name: install requirements
+        run: pip install -q -r requirements.txt
+
+        # Install dbt packages defined in packages.yml
+      - name: dbt deps
+        run: dbt deps
+
+        # Retrieve the PR number and set it to the variable findPR
+      - name: Find Current Pull Request
+        uses: jwalton/gh-find-current-pr@v1.3.0
+        id: findPR
+
+        # Run and test all dbt models
+      - name: dbt build
+        run: dbt build --profiles-dir ./
+        env:
+          # Secrets are pulled from the Github Actions secrets setting
+          # See: https://docs.github.com/en/actions/security-guides/encrypted-secrets
+          # The findPR variable from the previous step is used to create a schema for the current PR 
+          # SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          # SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+          # SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+          SNOWFLAKE_SCHEMA: "${{ format('{0}_{1}', 'PR_NUM', steps.findPr.outputs.pr) }}"
+
+      - name: submit artifacts to datafold
+        run: |
+          set -ex
+          datafold dbt upload --ci-config-id 238 --run-type ${DATAFOLD_RUN_TYPE} --commit-sha ${GIT_SHA}
+        # The <datafold_ci_config_id> value can be obtained from the Datafold application: Settings > Integrations > dbt Core/Cloud > the ID column
+        env:
+          DATAFOLD_APIKEY: ${{ secrets.DATAFOLD_APIKEY }}
+          DATAFOLD_RUN_TYPE: "${{ 'pull_request' }}"
+          GIT_SHA: "${{ github.event.pull_request.head.sha }}"
