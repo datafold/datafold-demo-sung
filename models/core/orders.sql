@@ -1,3 +1,11 @@
+{# {{
+  config(
+    materialized='dynamic_table',
+    target_lag='70 seconds',
+    warehouse="DEMO",
+    )
+}} #}
+
 {% set payment_methods = ['credit_card', 'coupon', 'bank_transfer', 'gift_card'] %}
 
 with orders as (
