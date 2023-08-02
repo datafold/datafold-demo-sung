@@ -8,7 +8,7 @@ on:
       - '!main'
 
 jobs:
-  run:
+  dbt_pull_request:
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true

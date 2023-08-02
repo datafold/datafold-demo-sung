@@ -1,4 +1,4 @@
-name: dbt prod
+name: dbt_prod
 
 # Run this job on a push to the main branch or at 2AM
 on:
@@ -9,7 +9,7 @@ on:
     - cron: '0 2 * * *'
 
 jobs:
-  run:
+  dbt_prod:
     # This is the docker image used for the CI container
     runs-on: ubuntu-20.04
 
@@ -21,7 +21,7 @@ jobs:
         # Install Python 3.8, this is required to run dbt
       - uses: actions/setup-python@v2
         with:
-          python-version: '3.8'
+          python-version: '3.9.8'
 
         # Install Python packages defined in requirements.txt (dbt and dependencies)
       - name: install requirements
