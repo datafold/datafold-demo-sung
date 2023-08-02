@@ -33,7 +33,7 @@ jobs:
 
         # Run and test dbt models
       - name: dbt build
-        run: dbt build -s customers --full-refresh --profiles-dir ./ --target prod
+        run: dbt build --full-refresh --profiles-dir ./ --target prod
         env:
           # Secrets are pulled from the Github Actions secrets setting
           # See: https://docs.github.com/en/actions/security-guides/encrypted-secrets
@@ -51,4 +51,4 @@ jobs:
         env:
           DATAFOLD_APIKEY: ${{ secrets.DATAFOLD_APIKEY }}
           DATAFOLD_RUN_TYPE: "${{ 'production' }}"
-          GIT_SHA: "${{ github.ref == 'refs/heads/main' && github.sha }}"
+          GIT_SHA: "${{ github.ref == 'refs/heads/master' && github.sha }}"
