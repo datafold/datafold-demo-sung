@@ -1,0 +1,40 @@
+# datadiff.toml
+# https://docs.datafold.com/reference/open_source/cli#toml-config-file
+
+# example command
+# data-diff --conf datadiff.toml --run demo_xdb -k "order_id" -c amount -c status
+
+## DATABASE CONNECTION ##
+[database.postgres_connection] 
+  driver = "postgresql"
+  host = "ep-shrill-meadow-043325.us-west-2.aws.neon.tech"
+  database = "neondb"
+  user = "sungwonchung3"
+  password = "${POSTGRES_PASSWORD}" # or "<PASSWORD_STRING>"
+
+[database.snowflake_connection]
+  driver = "snowflake"
+  database = "DEV"
+  user = "sung"
+  password = "${SNOWFLAKE_PASSWORD}" # or "<PASSWORD_STRING>"
+  # the info below is only required for snowflake
+  account = "bya42734"
+  schema = "DEVELOPMENT_SUNG"
+  warehouse = "DEMO"
+  role = "DEMO_ROLE"
+
+
+## RUN PARAMETERS ##
+[run.default]
+  verbose = true
+
+[run.demo_xdb]
+  # Source 1 ("left")
+  1.database = "postgres_connection"
+  1.table = "orders"
+
+  # Source 2 ("right")
+  2.database = "snowflake_connection"
+  2.table = "ORDERS" # note that snowflake table names are case-sensitive
+
+  verbose = false
