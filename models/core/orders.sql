@@ -42,7 +42,7 @@ final as (
     select
         orders.order_id,
         orders.customer_id as customer_id_change,
-        orders.order_date,
+        orders.order_date as order_date_change,
         orders.status,
 
         {% for payment_method in payment_methods -%}
@@ -51,7 +51,7 @@ final as (
 
         {% endfor -%}
 
-        order_payments.total_amount * 2 as amount
+        order_payments.total_amount * 3 as amount
 
     from orders
 
