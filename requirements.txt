@@ -1,4 +1,4 @@
 dbt-core==1.6.0
 dbt-snowflake==1.6.0
-data-diff==0.8.0
+data-diff==0.8.4
 datafold-sdk==0.0.17
