@@ -41,7 +41,7 @@ final as (
 
     select
         orders.order_id,
-        orders.customer_id,
+        orders.customer_id as customer_id_change,
         orders.order_date,
         orders.status,
 
@@ -51,7 +51,7 @@ final as (
 
         {% endfor -%}
 
-        order_payments.total_amount as amount
+        order_payments.total_amount * 2 as amount
 
     from orders
 
@@ -61,4 +61,4 @@ final as (
 
 )
 
-select * from final limit 5
+select * from final limit 10
