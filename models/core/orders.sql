@@ -51,7 +51,7 @@ final as (
 
         {% endfor -%}
 
-        order_payments.total_amount * 5 as amount
+        order_payments.total_amount * 3 as amount
 
     from orders
 
