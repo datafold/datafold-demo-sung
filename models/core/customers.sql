@@ -49,7 +49,7 @@ final as (
 
     select
         customers.customer_id,
-        customers.first_name as changed_name,
+        customers.first_name as changed_names,
         customers.last_name,
         customer_orders.first_order,
         customer_orders.most_recent_order,
