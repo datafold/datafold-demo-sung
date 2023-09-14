@@ -30,15 +30,15 @@ models:
   elementary:
     +schema: elementary
     # enabled: "{{ target.name == 'prod' }}"
-  +meta:
-    datafold:
-      datadiff:
-        never_diff: true
+    # +meta:
+    #   datafold:
+    #     datadiff:
+    #       never_diff: true
   demo:
       materialized: table
       staging:
         materialized: view
-      +meta:
-        datafold:
-          datadiff:
-            never_diff: true
+      # +meta:
+      #   datafold:
+      #     datadiff:
+      #       never_diff: true
