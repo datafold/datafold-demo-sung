@@ -29,11 +29,11 @@ models:
   ## see docs: https://docs.elementary-data.com/
   elementary:
     +schema: elementary
-    # enabled: "{{ target.name == 'prod' }}"
-    +meta:
-      datafold:
-        datadiff:
-          never_diff: true
+    enabled: "{{ target.name == 'prod' }}"
+    # +meta:
+    #   datafold:
+    #     datadiff:
+    #       never_diff: true
   demo:
       materialized: table
       staging:
