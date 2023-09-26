@@ -2,9 +2,19 @@
 # https://docs.datafold.com/reference/open_source/cli#toml-config-file
 
 # example command
-# data-diff --conf datadiff.toml --run demo_xdb -k "order_id" -c amount -c status
+# data-diff --conf datadiff.toml --run demo_xdb -k "order_id" -c amount -c status --debug
+# data-diff --conf datadiff.toml --run demo_xdb_raw -k "id" -c status --debug
+# data-diff --conf datadiff.toml --run demo_xdb_duckdb -k "id" -c status --debug
 
 ## DATABASE CONNECTION ##
+# "duckdb://<dbname>@<filepath>"
+[database.duckdb_connection] 
+  driver = "duckdb"
+  # filepath = "datafold_demo.duckdb" # local duckdb file
+  # filepath = "md:"
+  filepath = "md:datafold_demo?motherduck_token=${motherduck_token}" # recommended for motherduck connection
+  database = "datafold_demo"
+
 [database.postgres_connection] 
   driver = "postgresql"
   host = "ep-shrill-meadow-043325.us-west-2.aws.neon.tech"
@@ -36,5 +46,27 @@
   # Source 2 ("right")
   2.database = "snowflake_connection"
   2.table = "ORDERS" # note that snowflake table names are case-sensitive
+
+  verbose = false
+
+[run.demo_xdb_raw]
+  # Source 1 ("left")
+  1.database = "postgres_connection"
+  1.table = "raw_orders"
+
+  # Source 2 ("right")
+  2.database = "snowflake_connection"
+  2.table = "RAW_ORDERS" # note that snowflake table names are case-sensitive
+
+  verbose = false
+
+[run.demo_xdb_duckdb]
+  # Source 1 ("left")
+  1.database = "duckdb_connection"
+  1.table = "development.raw_orders"
+
+  # Source 2 ("right")
+  2.database = "snowflake_connection"
+  2.table = "RAW_ORDERS" # note that snowflake table names are case-sensitive
 
   verbose = false
