@@ -32,3 +32,10 @@ demo:
       threads: 24
       client_session_keep_alive: True
       query_tag:
+
+    duck:
+      type: duckdb
+      schema: development
+      path: 'datafold_demo.duckdb'
+      # path: 'md:datafold_demo?motherduck_token={{ env_var("motherduck_token")}}'
+      threads: 16
