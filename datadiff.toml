@@ -10,9 +10,10 @@
 # "duckdb://<dbname>@<filepath>"
 [database.duckdb_connection] 
   driver = "duckdb"
-  # filepath = "datafold_demo.duckdb"
-  filepath = "md:datafold_demo?motherduck_token=${motherduck_token}"
-  database = "duckdb_demo"
+  # filepath = "datafold_demo.duckdb" # local duckdb file
+  # filepath = "md:"
+  filepath = "md:datafold_demo?motherduck_token=${motherduck_token}" # recommended for motherduck connection
+  database = "datafold_demo"
 
 [database.postgres_connection] 
   driver = "postgresql"
